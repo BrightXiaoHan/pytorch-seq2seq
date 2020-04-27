@@ -51,6 +51,9 @@ class SupervisedTrainer(object):
     def _train_batch(self, input_variable, input_lengths, target_variable, model, teacher_forcing_ratio):
         loss = self.loss
         # Forward propagation
+        if torch.cuda.is_available():
+            input_variable = input_variable.cuda()
+            target_variable = target_variable.cuda()
         decoder_outputs, decoder_hidden, other = model(input_variable, input_lengths, target_variable,
                                                        teacher_forcing_ratio=teacher_forcing_ratio)
         # Get loss

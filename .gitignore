@@ -78,3 +78,11 @@ target/
 .vagrant
 
 vocab_pickle
+
+# project
+data/
+experiment
+
+# ide
+.vscode
+.idea
