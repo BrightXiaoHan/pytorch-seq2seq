@@ -1,6 +1,7 @@
 import os
 import argparse
 import logging
+import pickle
 
 import torch
 from torch.optim.lr_scheduler import StepLR
@@ -30,15 +31,15 @@ except NameError:
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--train_path', action='store', dest='train_path',
-                    help='Path to train data')
+                    help='Path to train data', default="data/movecar/train/data.txt")
 parser.add_argument('--dev_path', action='store', dest='dev_path',
-                    help='Path to dev data')
+                    help='Path to dev data', default="data/movecar/dev/data.txt")
 parser.add_argument('--expt_dir', action='store', dest='expt_dir', default='./experiment',
                     help='Path to experiment directory. If load_checkpoint is True, then path to checkpoint directory has to be provided')
 parser.add_argument('--load_checkpoint', action='store', dest='load_checkpoint',
                     help='The name of the checkpoint to load, usually an encoded time string')
 parser.add_argument('--resume', action='store_true', dest='resume',
-                    default=False,
+                    default=True,
                     help='Indicates if training has to be resumed from the latest checkpoint')
 parser.add_argument('--log-level', dest='log_level',
                     default='info',
@@ -130,7 +131,7 @@ else:
 
 predictor = Predictor(seq2seq, input_vocab, output_vocab)
 
-while True:
-    seq_str = raw_input("Type in a source sequence:")
-    seq = seq_str.strip().split()
-    print(predictor.predict(seq))
+asr_config_file = "movecar/asr_config.pkl"
+with open(asr_config_file, "rb") as f:
+    asr_config = pickle.load(f)
+
