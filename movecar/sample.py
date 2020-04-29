@@ -131,7 +131,5 @@ else:
 
 predictor = Predictor(seq2seq, input_vocab, output_vocab)
 
-asr_config_file = "movecar/asr_config.pkl"
-with open(asr_config_file, "rb") as f:
-    asr_config = pickle.load(f)
+
 
